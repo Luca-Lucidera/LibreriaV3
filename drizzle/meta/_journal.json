@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1706443910329,
+      "tag": "0000_shallow_magdalene",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1706445183020,
+      "tag": "0001_dark_inertia",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1706447273527,
+      "tag": "0002_chilly_unus",
+      "breakpoints": true
+    }
+  ]
+}
