@@ -46,5 +46,8 @@ async function submit() {
         </CardFooter>
       </form>
     </Card>
+    <div class="mt-20">
+      <Button variant="outline" @click="navigateTo('/signup')" >No Account?</Button>
+    </div>
   </div>
 </template>
