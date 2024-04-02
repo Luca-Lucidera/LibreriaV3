@@ -38,6 +38,33 @@ export const useUser = () => {
 
   async function logout() {}
 
+  async function signup(
+    username: string,
+    password: string,
+    dateOfBirth: Date
+  ): Promise<Result<null, string>> {
+    try {
+      await $fetch("/api/auth/signup", {
+        method: "POST",
+        body: {
+          username,
+          password,
+          dateOfBirth,
+        },
+      });
+      return {
+        success: true,
+        successData: null,
+      };
+    } catch (e) {
+      if (e instanceof FetchError) {
+        return { success: false, errorData: e.statusMessage! };
+      } else {
+        return { success: false, errorData: "An unknown error occurred." };
+      }
+    }
+  }
+
   async function getUser() {
     try {
       if (user.value) return;
@@ -45,5 +72,5 @@ export const useUser = () => {
     } catch (e) {}
   }
 
-  return { user, login, logout, getUser };
+  return { user, login, logout, getUser, signup };
 };

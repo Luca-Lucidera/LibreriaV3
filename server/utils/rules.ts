@@ -1,24 +1,9 @@
-export const isValidUsername = (username: FormDataEntryValue | null): boolean => {
-  return (
-    typeof username === "string" &&
-    username.length >= 3 &&
-    username.length <= 31 &&
-    /^[a-z0-9_-]+$/.test(username)
-  );
+export const isValidUsername = (username: string | null): boolean => {
+  if(username === null) return false;
+  return username.length >= 3 && username.length <= 255;
 };
 
-export const isValidPassword = (password: FormDataEntryValue | null): boolean => {
-  return (
-    typeof password === "string" &&
-    password.length >= 6 &&
-    password.length <= 255
-  );
+export const isValidPassword = (password: string | null): boolean => {
+  if(password === null) return false;
+  return password.length >= 8 && password.length <= 255;
 };
-
-export const isValidDateOfBirth = (dateOfBirth: FormDataEntryValue | null): boolean => {
-  return (
-    typeof dateOfBirth === "string" &&
-    dateOfBirth.length >= 6 &&
-    dateOfBirth.length <= 255
-  );
-}

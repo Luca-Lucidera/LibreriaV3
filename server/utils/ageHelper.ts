@@ -1,4 +1,4 @@
-export const IsOver18 = (dateOfBirth: string): boolean => {
+export const IsOver18 = (dateOfBirth: Date): boolean => {
   const date = new Date(dateOfBirth);
   const now = new Date();
   const diff = now.getTime() - date.getTime();

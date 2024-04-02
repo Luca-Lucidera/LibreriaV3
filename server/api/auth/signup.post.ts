@@ -1,43 +1,32 @@
 import { Argon2id } from "oslo/password";
 import { generateId } from "lucia";
 
-export default eventHandler(async (event) => {
-  const formData = await readFormData(event);
+type Data = {
+  username: string;
+  password: string;
+  dateOfBirth: Date;
+};
 
-  const username = formData.get("username");
-  if (
-    typeof username !== "string" ||
-    username.length < 3 ||
-    username.length > 31 ||
-    !/^[a-z0-9_-]+$/.test(username)
-  ) {
+export default eventHandler(async (event) => {
+  const { username, dateOfBirth, password } = await readBody<Data>(event, {
+    strict: true,
+  });
+
+  if (!isValidUsername(username)) {
     throw createError({
       statusMessage: "Invalid username",
       statusCode: 400,
     });
   }
 
-  const password = formData.get("password");
-  if (
-    typeof password !== "string" ||
-    password.length < 6 ||
-    password.length > 255
-  ) {
+  if (!isValidPassword(password)) {
     throw createError({
       statusMessage: "Invalid password",
       statusCode: 400,
     });
   }
 
-  const dateOfBirth = formData.get("dateOfBirth");
-  if (!isValidDateOfBirth(dateOfBirth)) {
-    throw createError({
-      statusMessage: "Invalid dateOfBirth",
-      statusCode: 400,
-    });
-  }
-
-  const isOver18 = !IsOver18(dateOfBirth as string);
+  const isOver18 = IsOver18(dateOfBirth);
 
   const hashedPassword = await new Argon2id().hash(password);
   const userId = generateId(15);
@@ -47,7 +36,7 @@ export default eventHandler(async (event) => {
       id: userId,
       username,
       password: hashedPassword,
-      dateOfBirth: dateOfBirth as string,
+      dateOfBirth: dateOfBirth,
       isOver18,
     },
   });
